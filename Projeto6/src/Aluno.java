@@ -8,34 +8,40 @@
  *
  * @author Valter * Tiago
  */
-public class Aluno {
-
+public class Aluno
+{
     String nome;
+    
     int num;
-
-    public Aluno(String nome, int num) {
+    
+    public Aluno(String nome , int num){
         this.nome = nome;
         this.num = num;
     }
-
-    public Aluno() {
+    
+     public Aluno(){
 
     }
 
-    public String getNome() {
+    public String getNome()
+    {
         return nome;
     }
 
-    public int getNum() {
+    public int getNum()
+    {
         return num;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome)
+    {
         this.nome = nome;
     }
 
-    public void setNum(int num) {
+    public void setNum(int num)
+    {
         this.num = num;
     }
-
+    
+    
 }

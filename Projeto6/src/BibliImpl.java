@@ -1,10 +1,12 @@
 
-import java.rmi.*;
-import java.rmi.server.*;
+import java.io.File;
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BibliImpl extends UnicastRemoteObject implements BibliInterface {
+public class BibliImpl extends UnicastRemoteObject implements BibliInterface, Serializable {
 
     /**
      *
@@ -20,7 +22,8 @@ public class BibliImpl extends UnicastRemoteObject implements BibliInterface {
     }
 
     @Override
-    public void cadastrarAluno(String nome, int num) throws RemoteException {
+    public void cadastrarAluno(String nome, int num) throws RemoteException
+    {
         Aluno aluno = new Aluno();
 
         System.out.println("Aluno cadastrado:");
@@ -50,12 +53,16 @@ public class BibliImpl extends UnicastRemoteObject implements BibliInterface {
     @Override
     public void cadastrarLivro(int isbn, String nomeLivro, int quantidade) throws RemoteException // String nome , int num
     {
-        Livro livro = new Livro(isbn, quantidade, nomeLivro);
+        Livro livro = new Livro();
 
         System.out.println("Livro cadastrado:");
         System.out.println("Nome: " + nomeLivro);
         System.out.println("Isbn: " + isbn);
         System.out.println("Quantidade: " + quantidade + "\n");
+
+        livro.setNomeLivro(nomeLivro);
+        livro.setIsbn(isbn);
+        livro.setQuantidade(quantidade);
 
         livros.add(livro);
 
@@ -67,7 +74,7 @@ public class BibliImpl extends UnicastRemoteObject implements BibliInterface {
         for (Livro livro : livros) {
             if (livro.getIsbn() == isbn) {
                 System.out.println("Livro consultado : " + livro.getNomeLivro());
-                resultadoConsulta = "Nome: " + livro.getNomeLivro() + "\nIsbn: "
+                resultadoConsulta = "Nome: " + livro.getNomeLivro() + "\nIsbn: " 
                         + livro.getIsbn() + "\nQuantidade: " + livro.getQuantidade() + "\n";
                 return resultadoConsulta;
             }
@@ -101,28 +108,54 @@ public class BibliImpl extends UnicastRemoteObject implements BibliInterface {
     }
 
     @Override
-    public String listarAlunos() throws RemoteException {
-        String listaDeAlunos = "";
-        for (Aluno aluno : alunos) {
-            listaDeAlunos += "Nome: " + aluno.getNome()+ "\n"
-                    + "Número: " + aluno.getNum()+ "\n";
-            
+    public String listarArquivos(String dir) throws RemoteException {
+        List<String> arquivos = new ArrayList<>();
+        File diretorio = new File(dir);
+        File[] listaArquivos = diretorio.listFiles();
+        String resultado = "";
+        for(int i = 0; i < listaArquivos.length; i++) {
+            if(listaArquivos[i].isFile()) {
+                arquivos.add(listaArquivos[i].getName());
+                resultado += listaArquivos[i].getName() + "\n";
+            }
         }
         
-        return listaDeAlunos;
+        return resultado;
     }
 
-    @Override
-    public String listarLivros() throws RemoteException {
-        String listaDeLivros = "";
-        for (Livro livro : livros) {
-            listaDeLivros += "Título: " + livro.getNomeLivro() + "\n"
-                    + "ISBN: " + livro.getIsbn() + "\n"
-                    + "Quantidade: " + livro.getQuantidade() + "\n";
+    /*@Override
+    public File transferirArquivo(String dir , String arq) throws RemoteException {
+      List<String> arquivos = new ArrayList<>();
+        File diretorio = new File(dir);
+        File[] listaArquivos = diretorio.listFiles();
+        File arquivo;
+        for(int i = 0; i < listaArquivos.length; i++) {
+            if(listaArquivos[i].isFile() && listaArquivos[i].getName().equals(arq)) {
+                arquivo = listaArquivos[i].getAbsoluteFile();
+                
+                return arquivo;
+            }
             
+
         }
-        
-        return listaDeLivros;
+
+        return null;
+    }*/
+    
+    public void abrirServidor() throws RemoteException{
+
+    	// Criando servidor
+        enviaArquivo server = new enviaArquivo();
+
+        // Aguardar conexao de cliente para transferia
+        server.waitForClient();            
+            
     }
+    
+    
+        
+    
+    
+    
     
 }

@@ -1,23 +1,17 @@
 
+import java.io.File;
+
+
 public class Livro {
 
     int isbn, quantidade;
     String nomeLivro;
-
-    public Livro(int isbn, int quantidade, String nomeLivro) {
-        this.isbn = isbn;
-        this.quantidade = quantidade;
-        this.nomeLivro = nomeLivro;
-    }
-    
-    public Livro() {
-        
-    }
+    File livro;
 
     public String getNomeLivro() {
         return nomeLivro;
     }
-
+    
     public int getIsbn() {
         return isbn;
     }
@@ -26,6 +20,10 @@ public class Livro {
         return quantidade;
     }
 
+    public File getLivro() {
+        return livro;
+    }
+    
     public void setIsbn(int isbn) {
         this.isbn = isbn;
     }
@@ -38,4 +36,8 @@ public class Livro {
         this.quantidade = quantidade;
     }
 
+    public void setLivro(File livro) {
+        this.livro = livro;
+    }
+    
 }

@@ -17,50 +17,64 @@ public class BibliCliente {
             v = (BibliInterface) Naming.lookup("rmi://localhost:1099/biblioteca");
             sc = new Scanner(System.in);
             
-            // Setar cadastro de aluno
-            aluno = criarAluno();
-            // Setar cadastro de livro
-            livro = criarLivro();
+//            // Setar cadastro de aluno
+//            aluno = criarAluno();
+//            // Setar cadastro de livro
+//            livro = criarLivro();
+//            
+//            v.cadastrarAluno(aluno.getNome(), aluno.getNum());
+//            System.out.println("Aluno cadastrado com sucesso");
+//            
+//            // Cadastrar o livro
+//            v.cadastrarLivro(livro.getIsbn(), livro.getNomeLivro(), livro.getQuantidade());
+//            
+//            // Consultar livro
+//            alunoConsultado = v.consultarAlunos(aluno.getNum());
+//            System.out.println("Aluno Consultado : " + alunoConsultado);
+//            
+//            // Emprestar livro
+//            v.emprestarLivro(livro.getIsbn(), livro.getNomeLivro());
+//            
+//            // Consultar livro
+//            livroConsultado = v.consultarLivro(livro.getIsbn());
+//            // Mostrar livro consultado
+//            System.out.println(livroConsultado);
+//            
+//            // Emprestar livro
+//            v.emprestarLivro(livro.getIsbn(), livro.getNomeLivro());
+//            
+//            // Consultar livro
+//            livroConsultado = v.consultarLivro(livro.getIsbn());
+//            // Mostrar livro consultado
+//            System.out.println(livroConsultado);
+//            
+//            // Devolver livro
+//            v.devolverLivro(livro.getIsbn());
+//            
+//            // Consultar livro
+//            livroConsultado = v.consultarLivro(livro.getIsbn());
+//            // Mostrar livro consultado
+//            System.out.println(livroConsultado);
+//            
+            String dir = pegarDiretorio();
+            System.out.println(dir);
+//            
+            // Listar arquivos
+            String resultado = v.listarArquivos(dir);
+            System.out.println(resultado);
             
-            v.cadastrarAluno(aluno.getNome(), aluno.getNum());
-            System.out.println("Aluno cadastrado com sucesso");
+           /* System.out.println("Escolha um livro para baixar. ");
             
-            // Cadastrar o livro
-            v.cadastrarLivro(livro.getIsbn(), livro.getNomeLivro(), livro.getQuantidade());
+            String livroBaixar = sc.nextLine();
             
-            // Consultar livro
-            alunoConsultado = v.consultarAlunos(aluno.getNum());
-            System.out.println("Aluno Consultado : " + alunoConsultado);
+            String diretorio = "/home/aluno/Downloads/" ;
+            */
             
-            // Emprestar livro
-            v.emprestarLivro(livro.getIsbn(), livro.getNomeLivro());
+            recebeArquivo receber = new recebeArquivo();
             
-            // Consultar livro
-            livroConsultado = v.consultarLivro(livro.getIsbn());
-            // Mostrar livro consultado
-            System.out.println(livroConsultado);
+            receber.getFileFromFileServe(dir);
             
-            // Emprestar livro
-            v.emprestarLivro(livro.getIsbn(), livro.getNomeLivro());
-            
-            // Consultar livro
-            livroConsultado = v.consultarLivro(livro.getIsbn());
-            // Mostrar livro consultado
-            System.out.println(livroConsultado);
-            
-            // Devolver livro
-            v.devolverLivro(livro.getIsbn());
-            
-            // Consultar livro
-            livroConsultado = v.consultarLivro(livro.getIsbn());
-            // Mostrar livro consultado
-            System.out.println(livroConsultado);
-            
-            // Listar alunos
-            v.listarAlunos();
-            
-            // Listar livros
-            v.listarLivros();
+            v.abrirServidor();
             
         } catch (Exception e) { /*...*/ }
     }
@@ -97,5 +111,13 @@ public class BibliCliente {
             livro.setQuantidade(qtdLivro);
             
             return livro;
+    }
+    
+    public static String pegarDiretorio()
+    {
+        System.out.println("Digite o diretório que deseja listar arquivos:");
+            String dir = sc.nextLine();
+            System.out.println(dir);
+            return dir;
     }
 }
